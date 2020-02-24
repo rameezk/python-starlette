@@ -18,6 +18,7 @@ COPY --from=builder /install /usr/local
 COPY app.py entrypoint.sh /app/
 
 WORKDIR /app
+USER 1001
 
 CMD ["sh", "entrypoint.sh"]
 
