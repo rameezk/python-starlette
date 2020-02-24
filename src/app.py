@@ -1,17 +1,19 @@
 import uvicorn
+import os
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
-from starlette.requests import Request
-from starlette.routing import Route
 
+from api import get_routes
 
-async def root(request: Request):
-    data = await request.json()
-    return JSONResponse({"response": data})
+environment = os.environ.get("ENVIRONMENT")
 
+debug = False
+reload = False
+if environment == "DEV":
+    debug = True
+    reload = True
 
-app = Starlette(routes=[Route("/", root, methods=["POST"])])
+app = Starlette(routes=get_routes(), debug=debug)
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run("app:app", host="0.0.0.0", port=5000, reload=reload)
