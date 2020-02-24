@@ -21,4 +21,3 @@ WORKDIR /app
 USER 1001
 
 CMD ["sh", "entrypoint.sh"]
-
