@@ -10,8 +10,8 @@ async def root(request: Request):
     return JSONResponse({"response": data})
 
 
-app = Starlette(debug=True, routes=[Route("/", root, methods=["POST"])])
+app = Starlette(routes=[Route("/", root, methods=["POST"])])
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=5000)
