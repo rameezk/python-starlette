@@ -1,11 +1,9 @@
-from json import JSONDecodeError
-
 import uvicorn
 import os
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
 
 from api import get_routes
+from api.handler.exception import exception_handlers
 
 environment = os.environ.get("ENVIRONMENT")
 
@@ -15,12 +13,6 @@ if environment == "DEV":
     debug = True
     reload = True
 
-
-async def request_error(request, exc):
-    return JSONResponse({"detail": "Invalid request"}, status_code=400)
-
-
-exception_handlers = {JSONDecodeError: request_error}
 
 app = Starlette(routes=get_routes(), debug=debug, exception_handlers=exception_handlers)
 
