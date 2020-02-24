@@ -8,7 +8,8 @@ async def post(request: Request):
 
 
 async def get(request: Request):
-    return JSONResponse({"hello": "world"})
+    order_id = request.path_params["order_id"]
+    return JSONResponse({"order_id": order_id})
 
 
 routes = [
