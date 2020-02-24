@@ -16,6 +16,7 @@ class Event(Base):
         String(length=36),
         ForeignKey("aggregates.uuid"),
         nullable=False,
+        index=True,
     )
     name = Column("name", String(length=50), nullable=False)
     data = Column("data", JSON)
