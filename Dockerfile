@@ -15,7 +15,7 @@ RUN pip install --install-option="--prefix=/install" -r /requirements.txt
 FROM BASE
 
 COPY --from=builder /install /usr/local
-COPY app.py entrypoint.sh /app/
+COPY src /app/
 
 WORKDIR /app
 USER 1001
