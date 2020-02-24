@@ -2,9 +2,20 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.routing import Route
 
+from domain.order import Order
+
 
 async def post(request: Request):
-    return JSONResponse({"hello": "world"})
+    data = await request.json()
+
+    user_id = data.get("user_id", None)
+    if user_id:
+        order = Order.create(user_id)
+        return JSONResponse(
+            {"order": {"user_id": order.user_id, "status": order.status}},
+            status_code=201,
+        )
+    return JSONResponse({"error": "no user_id sent"}, status_code=400)
 
 
 async def get(request: Request):
