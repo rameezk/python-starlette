@@ -2,7 +2,7 @@ import abc
 import typing
 import uuid
 
-from repository.event_stream import EventStream
+from repository.stream.event_stream import EventStream
 from domain.events.event import Event
 
 

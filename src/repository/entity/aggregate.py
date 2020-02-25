@@ -1,11 +1,12 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer, ForeignKey, JSON
+import sqlalchemy
 
-Base = declarative_base()
+metadata = sqlalchemy.MetaData()
 
-
-class Aggregate(Base):
-    __tablename__ = "aggregates"
-
-    uuid = Column("uuid", String(length=36), nullable=False, primary_key=True)
-    version = Column("version", Integer, nullable=False, default=1)
+aggregates = sqlalchemy.Table(
+    "aggregates",
+    metadata,
+    sqlalchemy.Column(
+        "uuid", sqlalchemy.String(length=36), nullable=False, primary_key=True
+    ),
+    sqlalchemy.Column("version", sqlalchemy.Integer, default=1, nullable=False),
+)

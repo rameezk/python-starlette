@@ -1,24 +1,20 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, ForeignKey, JSON
-from sqlalchemy.orm import relationship
+import sqlalchemy
 
-from .aggregate import Aggregate
+metadata = sqlalchemy.MetaData()
 
-Base = declarative_base()
-
-
-class Event(Base):
-    __tablename__ = "events"
-
-    uuid = Column("uuid", String(length=36), nullable=False, primary_key=True)
-    aggregate_uuid = Column(
+events = sqlalchemy.Table(
+    "events",
+    metadata,
+    sqlalchemy.Column(
+        "uuid", sqlalchemy.String(length=36), nullable=False, primary_key=True
+    ),
+    sqlalchemy.Column(
         "aggregate_uuid",
-        String(length=36),
-        ForeignKey("aggregates.uuid"),
+        sqlalchemy.String(length=36),
+        sqlalchemy.ForeignKey("aggregates.uuid"),
         nullable=False,
         index=True,
-    )
-    name = Column("name", String(length=50), nullable=False)
-    data = Column("data", JSON)
-
-    aggregate = relationship(Aggregate, uselist=False, backref="events")
+    ),
+    sqlalchemy.Column("name", sqlalchemy.String(length=50), nullable=False),
+    sqlalchemy.Column("data", sqlalchemy.JSON),
+)
